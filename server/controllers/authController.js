@@ -1,5 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import bcrypt from "bcryptjs";
 import db from "../db/queries.js";
+import jwt from "jsonwebtoken";
 import { validationResult, matchedData } from "express-validator";
 import { validateSignupData } from "../utils/validateUserData.js";
 
@@ -40,6 +44,40 @@ const userSignup = [
 ];
 
 //login controller
-const userLogin = async (req, res, next) => {};
+const userLogin = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
 
-export default { userSignup };
+    if (!username || !password) {
+      return res.status(403).json({
+        message: "No username or password found",
+      });
+    }
+
+    const user = await db.getUserByUsername(username);
+    if (!user) {
+      return res.status(400).json({
+        message: "Username doesn't exists",
+      });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(400).json({
+        message: "Incorrect password",
+      });
+    }
+
+    const SECRET = process.env.JWT_SECRET;
+    jwt.sign({ user }, SECRET, { expiresIn: "7d" }, (err, token) => {
+      if (err) return next(err);
+      return res.json({
+        token: token,
+      });
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { userSignup, userLogin };
