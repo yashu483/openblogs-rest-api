@@ -12,13 +12,13 @@ import commentsRouter from "./routes/commentsRouter.js";
 const app = express();
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
-app.options(cors());
-
 // const corsOptions = {
 //   origin: ["demosite.com", "demosite2.com"],
 //   optionsSuccessStatus: 200,
 // };
+
 app.use(cors());
+// app.options(cors());
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -27,8 +27,8 @@ app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
-app.use("/", (req, res) => {
-  res.send("got");
-});
+// app.use("/", (req, res) => {
+//   res.send("got");
+// });
 
 export default app;
