@@ -3,9 +3,6 @@ dotenv.config();
 
 import express from "express";
 import jwt from "jsonwebtoken";
-import passport from "passport";
-import session from "express-session";
-import { Strategy as LocalStrategy } from "passport-local";
 import path from "node:path";
 import url from "node:url";
 
