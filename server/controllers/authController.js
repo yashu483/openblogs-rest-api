@@ -69,7 +69,10 @@ const userLogin = async (req, res, next) => {
     }
 
     const SECRET = process.env.JWT_SECRET;
-    jwt.sign({ user }, SECRET, { expiresIn: "7d" }, (err, token) => {
+
+    // creating new user obj to omit password being passed to jwt token
+    const jwtUser = { id: user.id, username: user.username };
+    jwt.sign({ jwtUser }, SECRET, { expiresIn: "7d" }, (err, token) => {
       if (err) return next(err);
       return res.json({
         token: token,
