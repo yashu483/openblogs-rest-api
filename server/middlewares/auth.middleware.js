@@ -3,35 +3,31 @@ dotenv.config();
 
 import jwt from "jsonwebtoken";
 
-const authMiddleware = async (req, res, next) => {
-  const authHeader = req.headers["authorization"];
+const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-  // check header exists
-  if (typeof authHeader === undefined) {
+  if (!authHeader) {
     return res.status(401).json({
       message: "Authorization header missing",
     });
   }
 
-  const parts = authHeader.split(" ");
-  if (parts.length !== 2 || parts[0] !== "Bearer") {
+  const [scheme, token] = authHeader.split(" ");
+
+  if (scheme !== "Bearer" || !token) {
     return res.status(401).json({
-      message: "Invalid authorization token",
+      message: "Invalid authorization format",
     });
   }
 
-  const token = parts[1];
-
   try {
-    const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
-    req.verifiedUser = decodedUser;
-
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.verifiedUser = decoded;
     next();
-  } catch (err) {
-    return res.status(403).json(err);
-    // return res.status(403).json({
-    //   message: "Invalid  or expired token",
-    // });
+  } catch {
+    return res.status(403).json({
+      message: "Invalid or expired token",
+    });
   }
 };
 

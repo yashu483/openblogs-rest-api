@@ -4,8 +4,8 @@ dotenv.config();
 import db from "./../db/queries.js";
 import { validateSignupData } from "./../utils/validateUserData.js";
 import { validationResult, matchedData } from "express-validator";
-import generateToken from "./../utils/generateToken.js";
-import bcrypt from "bcryptjs";
+import asyncHandler from "../utils/asyncHandler.js";
+import updateUserService from "../services/updateUserService.js";
 
 const getUser = async (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ const getUser = async (req, res, next) => {
       });
     }
 
-    const userData = await db.getUserFullDataByUsername(user.username);
+    const userData = await db.getUserFullDataById(user.id);
     res.status(200).json(userData);
   } catch (err) {
     next(err);
@@ -25,52 +25,32 @@ const getUser = async (req, res, next) => {
 
 const updateUserData = [
   validateSignupData,
-  async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(403).json({
-          messages: errors.array(),
-        });
-      }
-
-      const user = await req.verifiedUser.user;
-      const validatedUserData = matchedData(req);
-
-      const id = typeof user.id === "string" ? Number(user.id) : user.id;
-      if (isNaN(id)) {
-        res.status(404).json({
-          message: "Page not found",
-        });
-      }
-      const hash = await bcrypt.hash(validatedUserData.password, 10);
-
-      const updatedData = await db.updateUser(id, {
-        ...validatedUserData,
-        password: hash,
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(400).json({
+        errors: errors.array(),
       });
-      const token = generateToken(
-        {
-          username: updatedData.username,
-          id: updatedData.id,
-        },
-        process.env.JWT_SECRET,
-      );
 
-      return res.status(200).json({
-        user: {
-          id: updatedData.id,
-          username: updatedData.username,
-          fullName: updatedData.fullName,
-          createdAt: updatedData.createdAt,
-          updatedAt: updatedData.updateAt,
-        },
-        token: token,
+    const user = await req.verifiedUser;
+    const validatedData = matchedData(req);
+
+    // returns true if there is user with the username
+    const check = db.checkUsernameAvailability(validatedData.username);
+
+    if (check) {
+      return res.status(400).json({
+        message: "Username already exists",
       });
-    } catch (err) {
-      next(err);
     }
-  },
+
+    const userId = typeof user.id === "string" ? Number(user.id) : user.id;
+    if (isNaN(userId)) throw new Error("Invalid JWT token");
+
+    const result = await updateUserService(userId, validatedData);
+
+    res.status(200).json(result);
+  }),
 ];
 
 export default { getUser, updateUserData };

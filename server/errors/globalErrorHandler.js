@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 const globalErrorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
 

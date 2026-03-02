@@ -35,10 +35,10 @@ const getUserByUsername = async (username) => {
   return user;
 };
 
-const getUserFullDataByUsername = async (username) => {
+const getUserFullDataById = async (id) => {
   const user = await prisma.user.findUnique({
     where: {
-      username,
+      id,
     },
     include: {
       posts: {
@@ -70,6 +70,6 @@ export default {
   createUser,
   checkUsernameAvailability,
   getUserByUsername,
-  getUserFullDataByUsername,
+  getUserFullDataById,
   updateUser,
 };

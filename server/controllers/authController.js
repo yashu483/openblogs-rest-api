@@ -72,12 +72,17 @@ const userLogin = async (req, res, next) => {
 
     // creating new user obj to omit password being passed to jwt token
     const jwtUser = { id: user.id, username: user.username };
-    jwt.sign({ jwtUser }, SECRET, { expiresIn: "7d" }, (err, token) => {
-      if (err) return next(err);
-      return res.json({
-        token: token,
-      });
-    });
+    jwt.sign(
+      { id: jwtUser.id, username: jwtUser.username },
+      SECRET,
+      { expiresIn: "7d" },
+      (err, token) => {
+        if (err) return next(err);
+        return res.json({
+          token: token,
+        });
+      },
+    );
   } catch (err) {
     next(err);
   }

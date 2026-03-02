@@ -3,7 +3,7 @@ import cors from "cors";
 import path from "node:path";
 import url from "node:url";
 
-// imports for server side routes and modules
+// imports for routes, utility functions, etc
 import authRouter from "./routes/authRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 import postsRouter from "./routes/postsRouter.js";
@@ -13,13 +13,7 @@ import globalErrorHandler from "./errors/globalErrorHandler.js";
 const app = express();
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
-// const corsOptions = {
-//   origin: ["demosite.com", "demosite2.com"],
-//   optionsSuccessStatus: 200,
-// };
-
 app.use(cors());
-// app.options(cors());
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
