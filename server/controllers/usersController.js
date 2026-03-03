@@ -36,7 +36,7 @@ const updateUserData = [
     const validatedData = matchedData(req);
 
     // returns true if there is user with the username
-    const check = db.checkUsernameAvailability(validatedData.username);
+    const check = await db.checkUsernameAvailability(validatedData.username);
 
     if (check) {
       return res.status(400).json({
