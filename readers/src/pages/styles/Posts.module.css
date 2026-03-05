@@ -1,0 +1,86 @@
+.main {
+  padding: 0px 10px;
+}
+.mainHeading {
+  background: linear-gradient(90deg, #2563eb, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+.description {
+  color: rgb(75 85 99 / 1);
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  border: 2px solid blue;
+  border-radius: 5px;
+}
+
+.searchBar:focus-within {
+  /* box-shadow:
+    1px 1px 3px rgb(0, 0, 255, 0.5),
+    -1px -1px 3px rgb(0, 0, 255, 0.5); */
+  box-shadow: 1px 1px pink;
+}
+.searchBar > input {
+  flex: 1;
+  outline: none;
+  border: none;
+  padding: 5px;
+}
+.searchBar > input:focus {
+  outline: none;
+  border: none;
+}
+.searchBar > button {
+  border: none;
+  background-color: blue;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.filterBy {
+  display: flex;
+  align-items: stretch;
+  margin-top: 20px;
+  border: 2px solid purple;
+  gap: 5px;
+  border-radius: 5px;
+}
+.filterBy > label {
+  background-color: purple;
+  color: white;
+  font-weight: 600;
+  padding: 0px 3px;
+  display: flex;
+  align-items: center;
+}
+.filterBy > select {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: rgb(58, 58, 58);
+}
+
+.filterBy > button {
+  color: white;
+  background-color: black;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+}
