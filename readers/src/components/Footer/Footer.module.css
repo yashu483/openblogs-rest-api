@@ -2,22 +2,37 @@
   padding: 6px;
   text-align: center;
   margin-top: auto;
-  border-top: 1px solid rgb(236, 236, 236);
-  box-shadow: 0 -2px 2px rgba(18, 28, 28, 0.12);
+  border-top: 1px solid gray;
 }
 
 .footer > p {
-  margin: 0;
-  color: gray;
+  color: rgb(82, 82, 82);
   font-size: 0.9rem;
+  margin: 5px;
 }
 
 .footer > p > a {
-  color: gray;
+  color: rgb(80, 80, 80);
   text-decoration: underline 1px solid gray;
 }
 
 .footer > p > a:visited {
-  color: gray;
+  color: rgb(66, 66, 66);
   text-decoration: underline 1px solid gray;
+}
+.githubLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.github {
+  display: inline-block;
+  background-image: url("./../../assets/icons/github.png");
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 90%;
 }
