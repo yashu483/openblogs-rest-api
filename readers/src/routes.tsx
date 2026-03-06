@@ -5,6 +5,7 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { Homepage } from "@/pages/Homepage";
 import { Posts } from "@/pages/Posts";
 import { LogIn } from "@/features/auth/components/LogIn";
+import { Register } from "@/features/auth/components/Register";
 
 const routes: RouteObject[] = [
   {
@@ -12,7 +13,7 @@ const routes: RouteObject[] = [
     element: <MainLayout />,
     children: [
       {
-        path: "home",
+        index: true,
         element: <Homepage />,
       },
       {
@@ -22,6 +23,10 @@ const routes: RouteObject[] = [
       {
         path: "login",
         element: <LogIn />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
     ],
   },
