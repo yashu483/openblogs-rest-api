@@ -1,0 +1,49 @@
+.commentSection > *,
+.commentSection > *::before,
+.commentSection > *::after {
+  box-sizing: border-box;
+}
+
+.commentSection {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.commentSection > h1 {
+  font-size: 1.6rem;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form > div {
+  width: 100%;
+}
+
+.form > div > textarea {
+  display: block;
+  resize: vertical;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+}
+
+.form > div > textarea:focus {
+  outline: 1px solid blue;
+}
+.form > button {
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 1.1rem;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, #2563eb, #9333ea);
+}
