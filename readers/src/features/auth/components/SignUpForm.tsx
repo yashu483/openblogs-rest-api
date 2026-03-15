@@ -1,15 +1,23 @@
 import style from "./styles/SignUpForm.module.css";
+import { useRegister } from "../hooks/useRegister";
 
 export const SignUpForm = () => {
+  const { handleSubmit } = useRegister();
   return (
-    <form autoComplete="on" className={style.form}>
+    <form autoComplete="on" className={style.form} onSubmit={handleSubmit}>
       <div>
         <label htmlFor="username">Username</label>
         <input type="text" name="username" id="username" required />
       </div>
       <div>
         <label htmlFor="fullName">Full Name</label>
-        <input type="text" name="fullName" id="fullName" required />
+        <input
+          type="text"
+          name="fullName"
+          id="fullName"
+          required
+          autoComplete="name"
+        />
       </div>
       <div>
         <label htmlFor="password">Password</label>
@@ -28,7 +36,7 @@ export const SignUpForm = () => {
           required
           id="confirmPass"
           name="confirmPass"
-          autoCapitalize="new-password"
+          autoComplete="new-password"
         />
       </div>
 
